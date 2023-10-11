@@ -67,7 +67,7 @@ check_var RUNDECK_HOME
 check_dir "${RUNDECK_HOME}"
 
 ### Adding/updating SSH keys
-RUNDECK_SSH_KEYS_DIR="${RUNDECK_HOME}/ssh-keys"
+RUNDECK_SSH_KEYS_DIR="${RUNDECK_HOME}/etc/ssh-keys"
 check_var RUNDECK_SSH_KEYS_DIR
 check_dir "${RUNDECK_SSH_KEYS_DIR}"
 
@@ -90,14 +90,12 @@ done
 
 ### adding/updating passwords from environment variables
 
-for PROPERTY in $(env | grep -P '^[^=]+=' | awk -F '=' '{print $1}' | grep -P '^RUNDECK_.*_PASSWORD$')
+for RUNDECK_INT_KEY_PATH in $(env | grep -P '^[^=]+=' | awk -F '=' '{print $1}' | grep -P '_PASSWORD$')
 do
-    RUNDECK_INT_KEY_PATH="$(echo "${PROPERTY}" | awk '{sub(/^RUNDECK_/,""); print}')"
-    check_var RUNDECK_INT_KEY_PATH
-    RUNDECK_INT_KEY_VALUE="$(get_var_val "${PROPERTY}")"
-    check_var RUNDECK_INT_KEY_VALUE
     RUNDECK_INT_KEY_PATH="keys/${RUNDECK_INT_KEY_PATH}"
     check_var RUNDECK_INT_KEY_PATH
+    RUNDECK_INT_KEY_VALUE="$(get_var_val "${RUNDECK_INT_KEY_PATH}")"
+    check_var RUNDECK_INT_KEY_VALUE
 
     # unfortunately RD CLI supports to read password key from file only
     # we have to write it
@@ -117,7 +115,7 @@ do
 done
 
 ### Adding/updating projects
-RUNDECK_PROJECTS_DIR="${RUNDECK_HOME}/projects-config"
+RUNDECK_PROJECTS_DIR="${RUNDECK_HOME}/etc/projects"
 check_var RUNDECK_PROJECTS_DIR
 check_dir "${RUNDECK_PROJECTS_DIR}"
 

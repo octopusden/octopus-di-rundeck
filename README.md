@@ -37,11 +37,11 @@ Files with `*.priv.key` extenstion are imported as `keys/keyfileName.asc` to the
 **WARNING**: due to limitations/bugs of *Java* libraries used inside *RunDeck* **ed25519**-keys are supported **only**.
 
 ## Passwords imported to the Rundeck keystore
-All passwords are imported from environment variables passed to the container. Each variable named with prefix `RUNDECK` and suffix `_PASSWORD` is stored into the key `keys/resourcePassword`, where `resource` is the name of the resource got from variable name by subtracting *prefix* mentioned. Example:
-`RUNDECK_GIT_PASSWORD` ==> `keys/GIT_PASSWORD`
+All passwords are imported from environment variables passed to the container. Each variable named with suffix `_PASSWORD` is stored into the key `keys/${resource}_PASSWORD`, where `resource` is the name of the resource got from variable name. Example:
+`SOMETHING_PASSWORD` ==> `keys/SOMETHING_PASSWORD`
 
 ## Importing projects
-Rendered project templates should be available at `${RUNDECK_HOME}/projects-config` inside a container.
+Rendered project templates should be available at `${RUNDECK_HOME}/etc/projects` inside a container.
 The structure have to be:
 - *projectName1*
     -- `project.properties` - a *Java*-compatible `.properties` file with project configuration.
@@ -52,7 +52,7 @@ The structure have to be:
 **NOTE** any project configuration may be designed as *remco* template also
 
 ## Importing nodes
-Nodes definitions should be available as *JSON*-files anywhere inside a container. Recommended is `${RUNDECK_HOME}/nodes`.
+Nodes definitions should be available as *JSON*-files anywhere inside a container. Recommended is `${RUNDECK_HOME}/etc/nodes`.
 Nodes configuration files are referenced directly inside `project.properties` file by its absolut path, so their exact placement does not matter.
 
 **NOTE**: node configuration may be designed as *remco* template also.
