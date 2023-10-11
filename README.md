@@ -11,7 +11,7 @@ Version tag is: `${RUNDECK_VERSION}-${SEQUENCE_ADDTIONAL_VERSION}`
 where `SEQUENCE_ADDITIONAL_VERSION` is the digit of release appended by Octopusden maintainers while performing a release.
 
 # Configuration
-The global variable `${RUNDECK_HOME}` is set as `/home/rundeck` in the parent image by-default. It is **NOT** recommended to override it with another path.
+**WARNING**: global variable `${RUNDECK_HOME}` is set as `/home/rundeck` in the parent image by-default. It is **NOT** recommended to override it with another path. Internal `${RDECK_BASE}` variable is also set to `/home/rundeck` and we have these variables to be equal because of [this](https://docs.rundeck.com/docs/administration/security/authorization.html#policy-file-locations) and [this](https://github.com/rundeck/rundeck/issues/4052). We will **NOT** be able to apply static `.aclploicy` files otherwise.
 Mount a volumes and store all dynamic Rundeck-related stuff inside a volume mounted to its subdirs.
 All processes are started as `rundeck` user, so please make sure about the permissions for each volume.
 
