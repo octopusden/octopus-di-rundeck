@@ -61,7 +61,6 @@ Nodes configuration files are referenced directly inside `project.properties` fi
 - Mount volumes from server:
     -- `/home/rundeck/etc` - configuration files
     -- `/home/rundeck/server` - dynamic server data
-    -- `/home/rundeck/data` - dynamic server data
     -- `/etc/remco` - with full configuration templates instead of defaults
 - Store all rendered configuration files inside mounted volumes, along with SCM checks.
 
