@@ -8,7 +8,7 @@ source "${SCRIPT_DIR}/bash_utils.sh"
 
 check_var SCRIPT_DIR
 
-test [ "$(pwd)" != "/home/rundeck" ] && echo_error "Wrong directory. Please run this from /home/rundeck" && exit 1
+test -z "$(pwd | grep -P '^\/home\/rundeck$')" && echo_error "Wrong directory. Please run this from /home/rundeck" && exit 1
 
 function rd_stop() {
     local PIDS
@@ -34,7 +34,7 @@ trap rd_stop SIGHUP
 trap rd_stop SIGKILL
 trap rd_stop SIGTERM
 
-check_file "${SCRIPT_DIR}/add_projects.sh"
+check_file "${SCRIPT_DIR}/import.sh"
 check_file "${SCRIPT_DIR}/entry.sh"
 OUTPUT="/dev/stdout"
 check_var OUTPUT
@@ -69,7 +69,7 @@ do
 done
 
 
-"${SCRIPT_DIR}/add_projects.sh"
+"${SCRIPT_DIR}/import.sh"
 RETCODE="${?}"
 
 if (( RETCODE != 0 ))

@@ -11,7 +11,8 @@ Version tag is: `${RUNDECK_VERSION}-${SEQUENCE_ADDTIONAL_VERSION}`
 where `SEQUENCE_ADDITIONAL_VERSION` is the digit of release appended by Octopusden maintainers while performing a release.
 
 # Configuration
-The global variable `${RUNDECK_HOME}` is set as `/home/rundeck` in the parent image by-default. It is recommended to override it with another path and store all dynamic Rundeck-related stuff inside a volume mounted to it.
+The global variable `${RUNDECK_HOME}` is set as `/home/rundeck` in the parent image by-default. It is **NOT** recommended to override it with another path.
+Mount a volumes and store all dynamic Rundeck-related stuff inside a volume mounted to its subdirs.
 All processes are started as `rundeck` user, so please make sure about the permissions for each volume.
 
 ## Main configuration templates
@@ -30,7 +31,7 @@ Configuration templates should be organized as the following structure inside a 
         --- templates/ - a set of configuration templates. See *Rundeck* configuration documentation for details.
 
 ## SSH keys imported to the Rundeck keystore
-Should available at `${RUNDECK_HOME}/ssh-keys` folder inside a container.
+Should available at `${RUNDECK_HOME}/etc/ssh-keys` folder inside a container.
 Files with `*.priv.key` extenstion are imported as `keys/keyfileName.asc` to the keystore without any changes.
 
 **WARNING**: due to limitations/bugs of *Java* libraries used inside *RunDeck* **ed25519**-keys are supported **only**.
@@ -58,7 +59,9 @@ Nodes configuration files are referenced directly inside `project.properties` fi
 
 ## Running Suggestions
 - Mount volumes from server:
-    -- `${RUNDECK_HOME}` - with overriding `${RUNDECK_HOME}`, but leaving `WORKDIR` to `/home/rundeck`
+    -- `/home/rundeck/etc` - configuration files
+    -- `/home/rundeck/server` - dynamic server data
+    -- `/home/rundeck/data` - dynamic server data
     -- `/etc/remco` - with full configuration templates instead of defaults
 - Store all rendered configuration files inside mounted volumes, along with SCM checks.
 
