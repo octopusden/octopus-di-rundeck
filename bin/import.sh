@@ -92,10 +92,10 @@ done
 
 for RUNDECK_INT_KEY_PATH in $(env | grep -P '^[^=]+=' | awk -F '=' '{print $1}' | grep -P '_PASSWORD$')
 do
+    RUNDECK_INT_KEY_VALUE="$(get_var_val "${RUNDECK_INT_KEY_PATH}")"
     RUNDECK_INT_KEY_PATH="keys/${RUNDECK_INT_KEY_PATH}"
     check_var RUNDECK_INT_KEY_PATH
-    RUNDECK_INT_KEY_VALUE="$(get_var_val "${RUNDECK_INT_KEY_PATH}")"
-    check_var RUNDECK_INT_KEY_VALUE
+    check_var RUNDECK_INT_KEY_VALUE Y
 
     # unfortunately RD CLI supports to read password key from file only
     # we have to write it
