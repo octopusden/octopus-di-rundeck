@@ -9,10 +9,7 @@ RUN apt-get update && apt-get install --assume-yes rundeck-cli && apt-get autore
 
 # install our scripts
 COPY --chown=rundeck:root bin /home/rundeck/docker-lib
-RUN chmod 755 /home/rundeck/docker-lib/*.sh && \
-    mv /home/rundeck /local/rundeck && \
-    mkdir -p /home/rundeck && \
-    chown -R rundeck:root /home/rundeck
+RUN chmod 755 /home/rundeck/docker-lib/*.sh
 
 USER rundeck
-ENTRYPOINT [ "/bin/bash", "/local/rundeck/docker-lib/entrypoint.sh" ]
+ENTRYPOINT [ "/bin/bash", "/home/rundeck/docker-lib/entrypoint.sh" ]
