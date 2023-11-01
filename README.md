@@ -64,7 +64,10 @@ Nodes configuration files are referenced directly inside `project.properties` fi
     -- `/etc/remco` - with full configuration templates instead of defaults
 - Store all rendered configuration files inside mounted volumes, along with SCM checks.
 
+## Additional plugins installed
+- [Kubernetes plugins](https://docs.rundeck.com/docs/manual/plugins/kubernetes-plugins-overview.html) - for running jobs in K8S/OKD directly
+- [Vault KeyStorage plugin](https://docs.rundeck.com/docs/manual/key-storage/storage-plugins/vault.html)
+
 ## TODO:
 - migrate from *Rundeck CLI* to full-featured *Rundeck REST API*. This may fix the issue of auto-enabling *SCM* integration.
 - add *SCM* Job import workaround.
-- add *Valult* plugin and migrate all passwords to it.
