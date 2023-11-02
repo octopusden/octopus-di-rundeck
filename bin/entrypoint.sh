@@ -7,6 +7,9 @@ test ! -f "${SCRIPT_DIR}/bash_utils.sh" && echo "ERROR: Not found: ${SCIPT_DIR}/
 source "${SCRIPT_DIR}/bash_utils.sh"
 
 check_var SCRIPT_DIR
+check_var RUNDECK_GRAILS_URL
+check_var RUNDECK_ADMIN_USER
+check_var RUNDECK_ADMIN_PASSWORD Y
 
 test -z "$(pwd | grep -P '^\/home\/rundeck$')" && echo_error "Wrong directory. Please run this in /home/rundeck" && exit 1
 
@@ -105,10 +108,10 @@ done
 rm -rf "${RUNDECK_CONNECT_ERROR_FILE}"
 
 
-# note: it is not nice to hardcode internal URL with port, but no way to override it 
-# is provided by base image actually actually
+## NOTE: it is not nice to use external interface from inside a container
+##       but Rundeck provide 'error: missing username or roles' if 'localhost' is used
 python3 "${SCRIPT_DIR}/import.py" \
-    --rundeck-url "http://localhost:4440" \
+    --rundeck-url "${RUNDECK_GRAILS_URL}" \
     --rundeck-user "${RUNDECK_ADMIN_USER}" \
     --rundeck-password "${RUNDECK_ADMIN_PASSWORD}"
 RETCODE="${?}"
