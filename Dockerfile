@@ -4,10 +4,8 @@ FROM rundeck/rundeck:${RUNDECK_VERSION}
 USER root
 
 # install Python: required for K8S plugins
-# install rundeck cli
-RUN curl -s https://packagecloud.io/install/repositories/pagerduty/rundeck/script.deb.sh | os=any dist=any bash
 RUN apt-get --assume-yes update && \
-    apt-get --assume-yes install python3-dev python3-pip rundeck-cli && \
+    apt-get --assume-yes install python3-dev python3-pip && \
     apt-get --assume-yes autoremove && \
     apt-get --assume-yes clean && \
     rm -rf /var/cache/apt/*

@@ -8,7 +8,7 @@ source "${SCRIPT_DIR}/bash_utils.sh"
 
 check_var SCRIPT_DIR
 
-test -z "$(pwd | grep -P '^\/home\/rundeck$')" && echo_error "Wrong directory. Please run this from /home/rundeck" && exit 1
+test -z "$(pwd | grep -P '^\/home\/rundeck$')" && echo_error "Wrong directory. Please run this in /home/rundeck" && exit 1
 
 function rd_stop() {
     local PIDS
