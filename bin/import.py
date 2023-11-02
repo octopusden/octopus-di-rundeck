@@ -42,17 +42,17 @@ def main():
         logging.info(f"{_k.upper()}:\t[{_display_value}]")
         os.environ[_k.upper()] = _v if isinstance(_v, str) else str(_v)
     
-    args.rundeck_home = os.path.abspath(args.rundeck_home)
+    _args.rundeck_home = os.path.abspath(_args.rundeck_home)
 
-    if not os.path.isdir(args.rundeck_home):
-        raise FileNotFoundError(args.rundeck_home)
+    if not os.path.isdir(_args.rundeck_home):
+        raise FileNotFoundError(_args.rundeck_home)
 
     _rundeck = RundeckAPI(url=_args.rundeck_url, user=_args.rundeck_user, password=_args.rundeck_password)
 
 
-    import_secret_keys(_rundeck, args.rundeck_home)
+    import_secret_keys(_rundeck, _args.rundeck_home)
     import_passwords(_rundeck)
-    import_projects(_rundeck, args.rundeck_home)
+    import_projects(_rundeck, _args.rundeck_home)
 
 def import_secret_keys(rundeck, rundeck_home):
     """
