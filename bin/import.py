@@ -77,7 +77,8 @@ def import_secret_keys(rundeck, rundeck_home):
     for _file in _files:
         _file_path = os.path.join(_keys_dir, _file)
         # replace extension due to Rundeck conventions
-        _rundeck_key_path = posixpath.join("keys", _file.replace(_os_priv_key_extension, _rundeck_priv_key_extension))
+        # NOTE: "keys" part is appended by RundeckAPI as a constant, no need to do it here
+        _rundeck_key_path = _file.replace(_os_priv_key_extension, _rundeck_priv_key_extension)
         logging.info(f"Importing [{_file_path}] as [_rundeck_key_path]")
 
         with open(_file_path, mode='rb') as _f:
@@ -100,11 +101,12 @@ def import_passwords(rundeck):
             logging.debug(f"Skipping [{_k}] - empty password")
             continue
 
-        _rundeck_key_path = posixpath.join("keys", _k)
+        # NOTE: "keys" part is appended by RundeckAPI as a constant, no need to do it here
+        _rundeck_key_path = _k
         logging.info(f"Importing [{_k}] as [{_rundeck_key_path}]")
         rundeck.key_storage__upload(_rundeck_key_path, "password", _v.encode("utf-8"))
     
-def imoport_projects(rundeck, rundeck_home):
+def import_projects(rundeck, rundeck_home):
     """
     Import projects and their SCM configuration (if given)
     :param RundeckAPI rundeck:
