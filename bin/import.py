@@ -120,7 +120,7 @@ def import_projects(rundeck, rundeck_home):
     logging.info(f"Importing projects from [{_projects_dir}]")
 
     _dirs = list(filter(
-        lambda _x: os.path.isdir(os.path.join(_projects_dir, _x), os.listdir(_projects_dir))))
+        lambda _x: os.path.isdir(os.path.join(_projects_dir, _x)), os.listdir(_projects_dir)))
 
     for _project in _dirs:
         _project_configuration = os.path.join(_projects_dir, _project, "project.properties")
