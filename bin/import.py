@@ -48,7 +48,8 @@ def main():
         raise FileNotFoundError(_args.rundeck_home)
 
     _rundeck = RundeckAPI(url=_args.rundeck_url, user=_args.rundeck_user, password=_args.rundeck_password)
-
+    # Redirects may be to "https" and verification may fail. Force to skip it.
+    _rundeck.web.verify = False
 
     import_secret_keys(_rundeck, _args.rundeck_home)
     import_passwords(_rundeck)

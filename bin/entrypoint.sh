@@ -115,7 +115,7 @@ RETCODE="${?}"
 
 if (( RETCODE != 0 ))
 then
-    echo_error "Add project failed with ${RETCODE}, exiting..."
+    echo_error "Add project failed with code ${RETCODE}, exiting..."
     rd_stop
     echo_info "Stopped"
     exit 1
