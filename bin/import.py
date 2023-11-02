@@ -138,6 +138,6 @@ def import_projects(rundeck, rundeck_home):
             #       but no other SCM and integration is planned for support in the future yet
             rundeck.scm__setup(_project, 'import', 'git-import', _scmc)
             rundeck.scm__enable(_project, 'import', 'git-import', True)
-            rundeck.scm__perform_all_actions(_project, 'import', 'git-import')
+            rundeck.scm__perform_all_actions(_project, 'import', 'import-jobs')
     
 main()
