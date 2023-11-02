@@ -10,7 +10,7 @@ from oc_cdtapi.RundeckAPI import RundeckAPI
 import os
 import posixpath
 
-def main(self):
+def main():
     """
     Main function
     """
@@ -73,7 +73,7 @@ def import_secret_keys(rundeck, rundeck_home):
         lambda _x: os.path.isfile(os.path.join(_keys_dir, _x)) and _x.endswith(_os_priv_key_extension),
         os.listdir(_keys_dir)))
 
-    for _file in _files
+    for _file in _files:
         _file_path = os.path.join(_keys_dir, _file)
         # replace extension due to Rundeck conventions
         _rundeck_key_path = posixpath.join("keys", _file.replace(_os_priv_key_extension, _rundeck_priv_key_extension))
