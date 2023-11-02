@@ -109,7 +109,7 @@ rm -rf "${RUNDECK_CONNECT_ERROR_FILE}"
 
 
 ## NOTE: it is not nice to use external interface from inside a container
-##       but Rundeck provide 'error: missing username or roles' if 'localhost' is used
+##       but Rundeck provides many redirects to it, so it is more safe
 python3 "${SCRIPT_DIR}/import.py" \
     --rundeck-url "${RUNDECK_GRAILS_URL}" \
     --rundeck-user "${RUNDECK_ADMIN_USER}" \
