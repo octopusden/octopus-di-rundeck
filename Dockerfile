@@ -16,7 +16,7 @@ USER rundeck
 # upgrade Python routines and install Python kubernetes client
 RUN python3 -m pip install --user --upgrade pip && \
     python3 -m pip install --user --upgrade  setuptools wheel && \
-    python3 -m pip install --user --upgrade kubernetes
+    python3 -m pip install --user --upgrade kubernetes 'oc-cdtapi>=3.12.0'
 
 # install K8S plugins
 # install Vault plugin
