@@ -68,6 +68,10 @@ Nodes configuration files are referenced directly inside `project.properties` fi
 - [Kubernetes plugins](https://docs.rundeck.com/docs/manual/plugins/kubernetes-plugins-overview.html) - for running jobs in K8S/OKD directly
 - [Vault KeyStorage plugin](https://docs.rundeck.com/docs/manual/key-storage/storage-plugins/vault.html)
 
+## Technical user note
+To get rid of `Missing username or roles` error while importing *SCM* configuration a user who performs an import must have at least one role.
+If authentication comes from *LDAP* this means it have to be a member of at least one group which has administrative priveleges on Rundeck.
+This is [Rundeck bug.](https://github.com/rundeck/rundeck/issues/8661)
+
 ## TODO:
-- migrate from *Rundeck CLI* to full-featured *Rundeck REST API*. This may fix the issue of auto-enabling *SCM* integration.
 - add *SCM* Job import workaround.
