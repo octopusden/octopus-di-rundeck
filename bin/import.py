@@ -53,6 +53,7 @@ def main():
     import_secret_keys(_rundeck, _args.rundeck_home)
     import_passwords(_rundeck)
     import_projects(_rundeck, _args.rundeck_home)
+    logging.info("Importing done")
 
 def import_secret_keys(rundeck, rundeck_home):
     """
@@ -84,6 +85,8 @@ def import_secret_keys(rundeck, rundeck_home):
         with open(_file_path, mode='rb') as _f:
             rundeck.key_storage__upload(_rundeck_key_path, "private", _f.read())
 
+    logging.info("Secret keys imported")
+
 def import_passwords(rundeck):
     """
     Import passwords from environment variables
@@ -105,6 +108,8 @@ def import_passwords(rundeck):
         _rundeck_key_path = _k
         logging.info(f"Importing [{_k}] as [{_rundeck_key_path}]")
         rundeck.key_storage__upload(_rundeck_key_path, "password", _v.encode("utf-8"))
+
+    logging.info("Passwords imported")
     
 def import_projects(rundeck, rundeck_home):
     """
@@ -140,5 +145,7 @@ def import_projects(rundeck, rundeck_home):
             rundeck.scm__setup(_project, 'import', 'git-import', _scmc)
             rundeck.scm__enable(_project, 'import', 'git-import', True)
             rundeck.scm__perform_all_actions(_project, 'import', 'import-jobs')
+
+    logging.info("Projects imported")
     
 main()
