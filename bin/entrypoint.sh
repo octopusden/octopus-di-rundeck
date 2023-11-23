@@ -7,7 +7,6 @@ test ! -f "${SCRIPT_DIR}/bash_utils.sh" && echo "ERROR: Not found: ${SCIPT_DIR}/
 source "${SCRIPT_DIR}/bash_utils.sh"
 
 check_var SCRIPT_DIR
-check_var RUNDECK_GRAILS_URL
 check_var RUNDECK_ADMIN_USER
 check_var RUNDECK_ADMIN_PASSWORD Y
 
@@ -111,7 +110,7 @@ rm -rf "${RUNDECK_CONNECT_ERROR_FILE}"
 ## NOTE: it is not nice to use external interface from inside a container
 ##       but Rundeck provides many redirects to it, so it is more safe
 python3 "${SCRIPT_DIR}/import.py" \
-    --rundeck-url "${RUNDECK_GRAILS_URL}" \
+    --rundeck-url "http://127.0.0.1:4440" \
     --rundeck-user "${RUNDECK_ADMIN_USER}" \
     --rundeck-password "${RUNDECK_ADMIN_PASSWORD}"
 RETCODE="${?}"

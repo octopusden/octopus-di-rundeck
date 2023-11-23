@@ -48,6 +48,7 @@ def main():
         raise FileNotFoundError(_args.rundeck_home)
 
     _rundeck = RundeckAPI(url=_args.rundeck_url, user=_args.rundeck_user, password=_args.rundeck_password)
+    _rundeck.web.verify = False
 
     import_secret_keys(_rundeck, _args.rundeck_home)
     import_passwords(_rundeck)
@@ -64,7 +65,8 @@ def import_secret_keys(rundeck, rundeck_home):
     _keys_dir = os.path.join(rundeck_home, "etc", "ssh-keys")
 
     if not os.path.isdir(_keys_dir):
-        raise FileNotFoundError(_keys_dir)
+        logging.warning(f"Skipping import SSH private keys: not found: [{_keys_dir}])")
+        return
 
     logging.info(f"Importing secret keys from [{_keys_dir}]")
 
@@ -113,7 +115,8 @@ def import_projects(rundeck, rundeck_home):
     _projects_dir = os.path.join(rundeck_home, "etc", "projects") 
 
     if not os.path.isdir(_projects_dir):
-        raise FileNotFoundError(_keys_dir)
+        logging.warning(f"Not importing projects: not found: [{_projects_dir}]")
+        return
 
     logging.info(f"Importing projects from [{_projects_dir}]")
 
