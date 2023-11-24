@@ -29,3 +29,8 @@ COPY --chown=rundeck:root bin /home/rundeck/docker-lib
 RUN chmod 755 /home/rundeck/docker-lib/*.sh
 
 ENTRYPOINT [ "/bin/bash", "/home/rundeck/docker-lib/entrypoint.sh" ]
+
+# Regardless we are using base image WORKDIR
+# some OKD security features wands us to specify the same value here directly
+# and this instruction have to be last
+WORKDIR /home/rundeck
