@@ -40,7 +40,6 @@ def main():
             _display_value = '*'*len(_v)
     
         logging.info(f"{_k.upper()}:\t[{_display_value}]")
-        os.environ[_k.upper()] = _v if isinstance(_v, str) else str(_v)
     
     _args.rundeck_home = os.path.abspath(_args.rundeck_home)
 

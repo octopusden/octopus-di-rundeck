@@ -10,12 +10,15 @@ RUN apt-get --assume-yes update && \
     apt-get --assume-yes clean && \
     rm -rf /var/cache/apt/*
 
-USER rundeck
 # upgrade Python routines and install Python kubernetes client
-RUN python3 -m pip install --user --upgrade pip && \
-    python3 -m pip install --user --upgrade setuptools wheel && \
-    python3 -m pip install --user --upgrade kubernetes 'oc-cdtapi>=3.12.0'
+# NOTE: it is necessary to do this ad system level
+# since OKD breaks user-localized installation 
+# due to its ows security features paranoia
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install --upgrade setuptools wheel && \
+    python3 -m pip install --upgrade kubernetes 'oc-cdtapi>=3.12.0'
 
+USER rundeck
 # install K8S plugins
 # install Vault plugin
 ### NOTE: The exact download URL is unpreditable on GitHub
@@ -28,4 +31,16 @@ RUN cd /home/rundeck/libext && \
 COPY --chown=rundeck:root bin /home/rundeck/docker-lib
 RUN chmod 755 /home/rundeck/docker-lib/*.sh
 
+# it is necessary to make all items in /home/rundeck world-readable and writable
+# since OKD changing digital UID for the container user to unpredictable value
+# even if it is not root
+RUN find /home/rundeck -exec chown rundeck:root \{\} \; -exec chmod a+rw \{\} \; && \
+    find /home/rundeck -type d -exec chmod a+x \{\} \;
+
+# redefine base image entrypoint to ours
 ENTRYPOINT [ "/bin/bash", "/home/rundeck/docker-lib/entrypoint.sh" ]
+
+# Regardless we are using base image WORKDIR
+# some OKD security features wands us to specify the same value here directly
+# and this instruction have to be last
+WORKDIR /home/rundeck
